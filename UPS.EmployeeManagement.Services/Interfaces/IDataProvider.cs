@@ -7,8 +7,7 @@ namespace UPS.EmployeeManagement.Services.Interfaces
 {
     public interface IDataProvider
     {
-        Task<EmployeeResponse> GetEmployeesByPage(int pageNumber);
-        Task<EmployeeResponse> SearchEmployeeByName(string name);
+        Task<EmployeeResponse> GetEmployeesByPage(int pageNumber, string nameFilter);
         Task UpdateEmployee(Employee employee);
         Task DeleteEmployee(int employeeId);
     }

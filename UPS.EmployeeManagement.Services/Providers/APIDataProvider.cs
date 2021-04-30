@@ -32,15 +32,16 @@ namespace UPS.EmployeeManagement.Services.Providers
 
         #region Public Methods
 
-        public async Task<EmployeeResponse> GetEmployeesByPage(int pageNumber)
+        public async Task<EmployeeResponse> GetEmployeesByPage(int pageNumber, string nameFilter)
         {
-            var employeeResponse = await RequestData(EmployeeAction.List, pageNumber);
+            var employeeResponse = await RequestData(EmployeeAction.List, pageNumber, nameFilter);
             return employeeResponse;
         }
 
-        public Task<EmployeeResponse> SearchEmployeeByName(string name)
+        public async Task<EmployeeResponse> SearchEmployeeByName(string name)
         {
-            throw new NotImplementedException();
+            var employeeResponse = await RequestData(EmployeeAction.Search, null, name);
+            return employeeResponse;
         }
 
         public Task UpdateEmployee(Employee employee)
@@ -57,7 +58,7 @@ namespace UPS.EmployeeManagement.Services.Providers
 
         #region Private Methods
 
-        private async Task<EmployeeResponse> RequestData(EmployeeAction employeeAction, int? page)
+        private async Task<EmployeeResponse> RequestData(EmployeeAction employeeAction, int? page, string name)
         {
 			// Get the HttpMethod based on the action.
             var httpMethod = GetHttpMethodByAction(employeeAction);
@@ -70,6 +71,7 @@ namespace UPS.EmployeeManagement.Services.Providers
             var url = $"{_baseUrl}{_users}";
             // update with page number if provided
             if (page.HasValue) url = $"{url}?page={page}";
+            if (!string.IsNullOrEmpty(name)) url = $"{url}&name={name}";
 
             using (var request = new HttpRequestMessage(httpMethod, url))
             {

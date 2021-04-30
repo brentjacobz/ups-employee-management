@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Serilog.Core;
 using UPS.EmployeeManagement.Services.Dtos;
 using UPS.EmployeeManagement.Services.Interfaces;
+using UPS.EmployeeManagement.Services.Models;
 using UPS.EmployeeManagement.Services.Providers;
 
 namespace UPS.EmployeeManagement.UI
@@ -13,6 +14,7 @@ namespace UPS.EmployeeManagement.UI
     {
         private readonly IDataProvider _dataProvider;
         private int _currentPage;
+        private string _currentSearch;
         private readonly ILogger Logger;
         public EmployeeManagement(ILogger logger)
         {
@@ -24,13 +26,13 @@ namespace UPS.EmployeeManagement.UI
 
         private void EmployeeManagement_Load(object sender, EventArgs e)
         {
+            // Load the first page of employees on startup
             PopulateEmployeeGrid();
         }
 
         private async void PopulateEmployeeGrid()
         {
-            // Load the first page of employees on startup
-            var employeeResponse = await _dataProvider.GetEmployeesByPage(_currentPage);
+            var employeeResponse = await _dataProvider.GetEmployeesByPage(_currentPage, _currentSearch);
             dgEmployees.DataSource = employeeResponse.Employees;
             // Update UI
             UpdateUI(employeeResponse.PageInformation);
@@ -40,7 +42,7 @@ namespace UPS.EmployeeManagement.UI
         {
             if (pagination == null)
             {
-			    Logger.Warning("No pagination object return");
+                Logger.Warning("No pagination object return");
                 return;
             }
             btnPrevious.Enabled = pagination.Page != 1;
@@ -57,6 +59,12 @@ namespace UPS.EmployeeManagement.UI
         private void btnNext_Click(object sender, EventArgs e)
         {
             _currentPage++;
+            PopulateEmployeeGrid();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            _currentSearch = txtSearch.Text;
             PopulateEmployeeGrid();
         }
     }

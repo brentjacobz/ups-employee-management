@@ -32,7 +32,7 @@
 			this.btnNext = new System.Windows.Forms.Button();
 			this.btnPrevious = new System.Windows.Forms.Button();
 			this.lblCurrentPage = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.txtSearch = new System.Windows.Forms.TextBox();
 			this.btnSearch = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dgEmployees)).BeginInit();
 			this.SuspendLayout();
@@ -82,22 +82,24 @@
 			this.lblCurrentPage.TabIndex = 4;
 			this.lblCurrentPage.Text = "Page: 1 of 100";
 			// 
-			// textBox1
+			// txtSearch
 			// 
-			this.textBox1.Location = new System.Drawing.Point(530, 14);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(192, 20);
-			this.textBox1.TabIndex = 5;
+			this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSearch.Location = new System.Drawing.Point(530, 14);
+			this.txtSearch.Name = "txtSearch";
+			this.txtSearch.Size = new System.Drawing.Size(192, 20);
+			this.txtSearch.TabIndex = 5;
 			// 
 			// btnSearch
 			// 
-			this.btnSearch.Enabled = false;
+			this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSearch.Location = new System.Drawing.Point(728, 12);
 			this.btnSearch.Name = "btnSearch";
 			this.btnSearch.Size = new System.Drawing.Size(60, 23);
 			this.btnSearch.TabIndex = 6;
 			this.btnSearch.Text = "Search...";
 			this.btnSearch.UseVisualStyleBackColor = true;
+			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
 			// 
 			// EmployeeManagement
 			// 
@@ -105,7 +107,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Controls.Add(this.btnSearch);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.txtSearch);
 			this.Controls.Add(this.lblCurrentPage);
 			this.Controls.Add(this.btnPrevious);
 			this.Controls.Add(this.btnNext);
@@ -125,7 +127,7 @@
     private System.Windows.Forms.Button btnNext;
     private System.Windows.Forms.Button btnPrevious;
     private System.Windows.Forms.Label lblCurrentPage;
-    private System.Windows.Forms.TextBox textBox1;
+    private System.Windows.Forms.TextBox txtSearch;
     private System.Windows.Forms.Button btnSearch;
   }
 }
