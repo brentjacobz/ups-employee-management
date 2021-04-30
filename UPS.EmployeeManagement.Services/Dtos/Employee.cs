@@ -1,6 +1,6 @@
 using System;
 
-namespace UPS.EmployeeManagement.Services.Models
+namespace UPS.EmployeeManagement.Services.Dtos
 {
     public class Employee
     {
