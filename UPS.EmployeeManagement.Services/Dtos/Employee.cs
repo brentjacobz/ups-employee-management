@@ -4,12 +4,12 @@ namespace UPS.EmployeeManagement.Services.Dtos
 {
     public class Employee
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Gender { get; set; }
-        public string Status { get; set; }
-        public DateTime Created_At { get; set; }
-        public DateTime Updated_At { get; set; }
+        public long id { get; set; }
+        public string name { get; set; }
+        public string email { get; set; }
+        public string gender { get; set; }
+        public string status { get; set; }
+        public DateTime created_at { get; set; }
+        public DateTime updated_at { get; set; }
   }
 }

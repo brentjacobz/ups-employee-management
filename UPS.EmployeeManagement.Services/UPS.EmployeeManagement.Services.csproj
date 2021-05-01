@@ -47,15 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dtos\GoRestResponse.cs" />
+    <Compile Include="Responses\UpsertEmployeeResponse.cs" />
+    <Compile Include="Responses\GoRestResponse.cs" />
     <Compile Include="Dtos\PageInformation.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Interfaces\IDataProvider.cs" />
+    <Compile Include="Interfaces\IEmployeeService.cs" />
     <Compile Include="Dtos\Employee.cs" />
-    <Compile Include="Models\EmployeeResponse.cs" />
+    <Compile Include="Requests\EmployeeRequest.cs" />
+    <Compile Include="Responses\EmployeeResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\APIDataProvider.cs" />
-    <Compile Include="Providers\DataProvider.cs" />
+    <Compile Include="EmployeeService.cs" />
+    <Compile Include="Providers\ServiceBase.cs" />
+    <Compile Include="Providers\EmployeeWebAPIClient.cs" />
     <Compile Include="Providers\ProviderFactory.cs" />
   </ItemGroup>
   <ItemGroup>
