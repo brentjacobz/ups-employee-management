@@ -1,8 +1,8 @@
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Serilog;
-using UPS.EmployeeManagement.Services.Dtos;
 using UPS.EmployeeManagement.Services.Interfaces;
+using UPS.EmployeeManagement.Services.Models;
 using UPS.EmployeeManagement.Services.Providers;
 using UPS.EmployeeManagement.Services.Responses;
 
@@ -12,21 +12,22 @@ namespace UPS.EmployeeManagement.Services
     {
         private readonly ILogger _logger;
         private readonly IEmployeeRepository _employeeRepository;
+
         #region Constructors
 
-        public EmployeeService(ILogger logger, NameValueCollection configurationSettings) : base(logger)
+        public EmployeeService(ILogger logger, IEmployeeRepository employeeRepository) : base(logger)
         {
             _logger = logger;
-            _employeeRepository = ProviderFactory.GetDataProvider(logger, configurationSettings);
+            _employeeRepository = employeeRepository;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task<EmployeeResponse> GetEmployeesByPage(int page, string nameSearch)
+        public async Task<EmployeeResponse> GetEmployeesByPage(EmployeeFilter employeeFilter)
         {
-            var employeeResponse = await _employeeRepository.ListEmployees(page, nameSearch);
+            var employeeResponse = await _employeeRepository.ListEmployees(employeeFilter);
             return employeeResponse;
         }
 

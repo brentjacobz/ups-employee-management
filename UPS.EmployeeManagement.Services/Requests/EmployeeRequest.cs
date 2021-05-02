@@ -1,5 +1,5 @@
-using UPS.EmployeeManagement.Services.Dtos;
 using UPS.EmployeeManagement.Services.Enums;
+using UPS.EmployeeManagement.Services.Models;
 
 namespace UPS.EmployeeManagement.Services.Requests
 {

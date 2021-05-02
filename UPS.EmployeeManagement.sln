@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPS.EmployeeManagement.Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPS.EmployeeManagement.UI", "UPS.EmployeeManagement.UI\UPS.EmployeeManagement.UI.csproj", "{60508AD4-7CDE-48F5-8872-F0D531751745}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPS.EmployeeManagement.Tests", "UPS.EmployeeManagement.Tests\UPS.EmployeeManagement.Tests.csproj", "{977999C2-8A05-417F-9FC0-2DCD1275A97D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{60508AD4-7CDE-48F5-8872-F0D531751745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60508AD4-7CDE-48F5-8872-F0D531751745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60508AD4-7CDE-48F5-8872-F0D531751745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977999C2-8A05-417F-9FC0-2DCD1275A97D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977999C2-8A05-417F-9FC0-2DCD1275A97D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977999C2-8A05-417F-9FC0-2DCD1275A97D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977999C2-8A05-417F-9FC0-2DCD1275A97D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

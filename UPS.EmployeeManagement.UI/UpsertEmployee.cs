@@ -1,6 +1,6 @@
 using System;
 using System.Windows.Forms;
-using UPS.EmployeeManagement.Services.Dtos;
+using UPS.EmployeeManagement.Services.Models;
 
 namespace UPS.EmployeeManagement.UI
 {

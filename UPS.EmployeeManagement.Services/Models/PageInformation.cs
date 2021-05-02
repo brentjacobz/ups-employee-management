@@ -1,9 +1,9 @@
-namespace UPS.EmployeeManagement.Services.Dtos
+namespace UPS.EmployeeManagement.Services.Models
 {
     public class MetaData
     {
-	    public Pagination Pagination { get; set; }
-  }
+        public Pagination Pagination { get; set; }
+    }
 
     public class Pagination
     {
@@ -11,5 +11,5 @@ namespace UPS.EmployeeManagement.Services.Dtos
         public int Pages { get; set; }
         public int Page { get; set; }
         public int Limit { get; set; }
-  }
+    }
 }

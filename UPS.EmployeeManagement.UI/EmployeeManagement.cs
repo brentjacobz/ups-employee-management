@@ -5,9 +5,9 @@ using System.Linq;
 using System.Windows.Forms;
 using Serilog.Core;
 using UPS.EmployeeManagement.Services;
-using UPS.EmployeeManagement.Services.Dtos;
 using UPS.EmployeeManagement.Services.Enums;
 using UPS.EmployeeManagement.Services.Interfaces;
+using UPS.EmployeeManagement.Services.Models;
 using UPS.EmployeeManagement.Services.Providers;
 
 namespace UPS.EmployeeManagement.UI
@@ -15,28 +15,41 @@ namespace UPS.EmployeeManagement.UI
     public partial class EmployeeManagement : Form
     {
         private readonly IEmployeeService _employeeService;
-        private int _currentPage;
-        private string _currentSearch;
-        private readonly ILogger Logger;
+        private EmployeeFilter _currentEmployeeFilter;
+        private readonly ILogger _logger;
         private Employee _currentSelectedEmployee;
 
         public EmployeeManagement(ILogger logger)
         {
             InitializeComponent();
-            _currentPage = 1;
-            _employeeService = new EmployeeService(logger, ConfigurationManager.AppSettings);
-            Logger = logger;
+            _currentEmployeeFilter = new EmployeeFilter { PageNumber = 1 };
+            _employeeService = ServiceFactory.CreateEmployeeService(logger, ConfigurationManager.AppSettings);
+            _logger = logger;
+            if (_employeeService == null)
+            {
+                lblFeedback.Text = "EmployeeService could not be created";
+                Enabled = false;
+            }
+            else
+            {
+                lblFeedback.Text = "EmployeeService created successfully!";
+            }
         }
 
         private void EmployeeManagement_Load(object sender, EventArgs e)
         {
             // Load the first page of employees on startup
             PopulateEmployeeGrid();
+	    // Set all the Filter Controls
+            ResetFilter();
         }
 
         private async void PopulateEmployeeGrid()
         {
-            var employeeResponse = await _employeeService.GetEmployeesByPage(_currentPage, _currentSearch);
+            if (_employeeService == null)
+                return;
+
+            var employeeResponse = await _employeeService.GetEmployeesByPage(_currentEmployeeFilter);
             dgEmployees.DataSource = employeeResponse.Employees;
             // Update UI
             UpdateUI(employeeResponse.PageInformation);
@@ -46,12 +59,20 @@ namespace UPS.EmployeeManagement.UI
         {
             if (pagination == null)
             {
-                Logger.Warning("No pagination object return");
+                _logger.Warning("No pagination object return");
                 return;
             }
             btnPrevious.Enabled = pagination.Page != 1;
-            btnNext.Enabled = _currentPage != pagination.Pages;
+            btnNext.Enabled = _currentEmployeeFilter.PageNumber != pagination.Pages;
             lblCurrentPage.Text = $"Page: {pagination.Page} of {pagination.Pages}";
+        }
+
+        private void ResetFilter()
+        {
+            txtFilterName.Text = "";
+            txtFilterEmail.Text = "";
+            ddlFilterGender.SelectedIndex = 0;
+            ddlFilterStatus.SelectedIndex = 0;
         }
 
         private void UpdateSelectedEmployee()
@@ -64,19 +85,23 @@ namespace UPS.EmployeeManagement.UI
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            _currentPage--;
+            _currentEmployeeFilter.PageNumber--;
             PopulateEmployeeGrid();
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            _currentPage++;
+            _currentEmployeeFilter.PageNumber++;
             PopulateEmployeeGrid();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            _currentSearch = txtSearch.Text;
+            _currentEmployeeFilter.name = txtFilterName.Text;
+            _currentEmployeeFilter.email = txtFilterEmail.Text;
+            _currentEmployeeFilter.gender = ddlFilterGender.SelectedIndex > 0 ? ddlFilterGender.SelectedItem.ToString() : "";
+            _currentEmployeeFilter.status = ddlFilterStatus.SelectedIndex > 0 ? ddlFilterStatus.SelectedItem.ToString() : "";
+
             PopulateEmployeeGrid();
         }
 

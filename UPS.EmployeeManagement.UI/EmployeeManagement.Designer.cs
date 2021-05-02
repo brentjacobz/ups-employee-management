@@ -32,12 +32,22 @@
 			this.btnNext = new System.Windows.Forms.Button();
 			this.btnPrevious = new System.Windows.Forms.Button();
 			this.lblCurrentPage = new System.Windows.Forms.Label();
-			this.txtSearch = new System.Windows.Forms.TextBox();
+			this.txtFilterName = new System.Windows.Forms.TextBox();
 			this.btnSearch = new System.Windows.Forms.Button();
 			this.btnEditEmployee = new System.Windows.Forms.Button();
 			this.btnDeleteEmployee = new System.Windows.Forms.Button();
 			this.btnAddEmployee = new System.Windows.Forms.Button();
+			this.gbFilter = new System.Windows.Forms.GroupBox();
+			this.lblGender = new System.Windows.Forms.Label();
+			this.lblEmailFilter = new System.Windows.Forms.Label();
+			this.txtFilterEmail = new System.Windows.Forms.TextBox();
+			this.lblNameFilter = new System.Windows.Forms.Label();
+			this.lblFeedback = new System.Windows.Forms.Label();
+			this.ddlFilterGender = new System.Windows.Forms.ComboBox();
+			this.ddlFilterStatus = new System.Windows.Forms.ComboBox();
+			this.lblFilterStatus = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dgEmployees)).BeginInit();
+			this.gbFilter.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// dgEmployees
@@ -46,11 +56,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgEmployees.Location = new System.Drawing.Point(13, 40);
+			this.dgEmployees.Location = new System.Drawing.Point(13, 95);
 			this.dgEmployees.MultiSelect = false;
 			this.dgEmployees.Name = "dgEmployees";
+			this.dgEmployees.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
 			this.dgEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgEmployees.Size = new System.Drawing.Size(853, 521);
+			this.dgEmployees.Size = new System.Drawing.Size(853, 466);
 			this.dgEmployees.TabIndex = 0;
 			this.dgEmployees.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgEmployees_DataBindingComplete);
 			this.dgEmployees.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEmployees_RowEnter);
@@ -89,29 +100,28 @@
 			this.lblCurrentPage.TabIndex = 4;
 			this.lblCurrentPage.Text = "Page: 1 of 100";
 			// 
-			// txtSearch
+			// txtFilterName
 			// 
-			this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSearch.Location = new System.Drawing.Point(608, 14);
-			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(192, 20);
-			this.txtSearch.TabIndex = 5;
+			this.txtFilterName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtFilterName.Location = new System.Drawing.Point(52, 19);
+			this.txtFilterName.Name = "txtFilterName";
+			this.txtFilterName.Size = new System.Drawing.Size(192, 20);
+			this.txtFilterName.TabIndex = 5;
 			// 
 			// btnSearch
 			// 
-			this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSearch.Location = new System.Drawing.Point(806, 12);
+			this.btnSearch.Location = new System.Drawing.Point(771, 17);
 			this.btnSearch.Name = "btnSearch";
-			this.btnSearch.Size = new System.Drawing.Size(60, 23);
+			this.btnSearch.Size = new System.Drawing.Size(74, 23);
 			this.btnSearch.TabIndex = 6;
-			this.btnSearch.Text = "Search...";
+			this.btnSearch.Text = "Apply Filter";
 			this.btnSearch.UseVisualStyleBackColor = true;
 			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
 			// 
 			// btnEditEmployee
 			// 
 			this.btnEditEmployee.ForeColor = System.Drawing.Color.DarkGoldenrod;
-			this.btnEditEmployee.Location = new System.Drawing.Point(109, 11);
+			this.btnEditEmployee.Location = new System.Drawing.Point(109, 12);
 			this.btnEditEmployee.Name = "btnEditEmployee";
 			this.btnEditEmployee.Size = new System.Drawing.Size(91, 23);
 			this.btnEditEmployee.TabIndex = 7;
@@ -122,7 +132,7 @@
 			// btnDeleteEmployee
 			// 
 			this.btnDeleteEmployee.ForeColor = System.Drawing.Color.Red;
-			this.btnDeleteEmployee.Location = new System.Drawing.Point(206, 11);
+			this.btnDeleteEmployee.Location = new System.Drawing.Point(206, 12);
 			this.btnDeleteEmployee.Name = "btnDeleteEmployee";
 			this.btnDeleteEmployee.Size = new System.Drawing.Size(91, 23);
 			this.btnDeleteEmployee.TabIndex = 8;
@@ -133,7 +143,7 @@
 			// btnAddEmployee
 			// 
 			this.btnAddEmployee.ForeColor = System.Drawing.Color.DarkGreen;
-			this.btnAddEmployee.Location = new System.Drawing.Point(12, 11);
+			this.btnAddEmployee.Location = new System.Drawing.Point(12, 12);
 			this.btnAddEmployee.Name = "btnAddEmployee";
 			this.btnAddEmployee.Size = new System.Drawing.Size(91, 23);
 			this.btnAddEmployee.TabIndex = 9;
@@ -141,27 +151,123 @@
 			this.btnAddEmployee.UseVisualStyleBackColor = true;
 			this.btnAddEmployee.Click += new System.EventHandler(this.btnAddEmployee_Click);
 			// 
+			// gbFilter
+			// 
+			this.gbFilter.Controls.Add(this.ddlFilterStatus);
+			this.gbFilter.Controls.Add(this.lblFilterStatus);
+			this.gbFilter.Controls.Add(this.ddlFilterGender);
+			this.gbFilter.Controls.Add(this.lblGender);
+			this.gbFilter.Controls.Add(this.lblEmailFilter);
+			this.gbFilter.Controls.Add(this.txtFilterEmail);
+			this.gbFilter.Controls.Add(this.lblNameFilter);
+			this.gbFilter.Controls.Add(this.txtFilterName);
+			this.gbFilter.Controls.Add(this.btnSearch);
+			this.gbFilter.Location = new System.Drawing.Point(12, 41);
+			this.gbFilter.Name = "gbFilter";
+			this.gbFilter.Size = new System.Drawing.Size(851, 48);
+			this.gbFilter.TabIndex = 10;
+			this.gbFilter.TabStop = false;
+			this.gbFilter.Text = "Filter";
+			// 
+			// lblGender
+			// 
+			this.lblGender.AutoSize = true;
+			this.lblGender.Location = new System.Drawing.Point(486, 23);
+			this.lblGender.Name = "lblGender";
+			this.lblGender.Size = new System.Drawing.Size(45, 13);
+			this.lblGender.TabIndex = 14;
+			this.lblGender.Text = "Gender:";
+			// 
+			// lblEmailFilter
+			// 
+			this.lblEmailFilter.AutoSize = true;
+			this.lblEmailFilter.Location = new System.Drawing.Point(250, 22);
+			this.lblEmailFilter.Name = "lblEmailFilter";
+			this.lblEmailFilter.Size = new System.Drawing.Size(32, 13);
+			this.lblEmailFilter.TabIndex = 9;
+			this.lblEmailFilter.Text = "Email";
+			// 
+			// txtFilterEmail
+			// 
+			this.txtFilterEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtFilterEmail.Location = new System.Drawing.Point(288, 20);
+			this.txtFilterEmail.Name = "txtFilterEmail";
+			this.txtFilterEmail.Size = new System.Drawing.Size(192, 20);
+			this.txtFilterEmail.TabIndex = 8;
+			// 
+			// lblNameFilter
+			// 
+			this.lblNameFilter.AutoSize = true;
+			this.lblNameFilter.Location = new System.Drawing.Point(11, 22);
+			this.lblNameFilter.Name = "lblNameFilter";
+			this.lblNameFilter.Size = new System.Drawing.Size(35, 13);
+			this.lblNameFilter.TabIndex = 7;
+			this.lblNameFilter.Text = "Name";
+			// 
+			// lblFeedback
+			// 
+			this.lblFeedback.AutoSize = true;
+			this.lblFeedback.Location = new System.Drawing.Point(12, 572);
+			this.lblFeedback.Name = "lblFeedback";
+			this.lblFeedback.Size = new System.Drawing.Size(16, 13);
+			this.lblFeedback.TabIndex = 11;
+			this.lblFeedback.Text = "...";
+			// 
+			// ddlFilterGender
+			// 
+			this.ddlFilterGender.FormattingEnabled = true;
+			this.ddlFilterGender.Items.AddRange(new object[] {
+            "Select...",
+            "Male",
+            "Female"});
+			this.ddlFilterGender.Location = new System.Drawing.Point(538, 18);
+			this.ddlFilterGender.Name = "ddlFilterGender";
+			this.ddlFilterGender.Size = new System.Drawing.Size(80, 21);
+			this.ddlFilterGender.TabIndex = 15;
+			// 
+			// ddlFilterStatus
+			// 
+			this.ddlFilterStatus.FormattingEnabled = true;
+			this.ddlFilterStatus.Items.AddRange(new object[] {
+            "Select...",
+            "Active",
+            "Inactive"});
+			this.ddlFilterStatus.Location = new System.Drawing.Point(676, 18);
+			this.ddlFilterStatus.Name = "ddlFilterStatus";
+			this.ddlFilterStatus.Size = new System.Drawing.Size(80, 21);
+			this.ddlFilterStatus.TabIndex = 17;
+			// 
+			// lblFilterStatus
+			// 
+			this.lblFilterStatus.AutoSize = true;
+			this.lblFilterStatus.Location = new System.Drawing.Point(624, 23);
+			this.lblFilterStatus.Name = "lblFilterStatus";
+			this.lblFilterStatus.Size = new System.Drawing.Size(40, 13);
+			this.lblFilterStatus.TabIndex = 16;
+			this.lblFilterStatus.Text = "Status:";
+			// 
 			// EmployeeManagement
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(878, 599);
+			this.Controls.Add(this.lblFeedback);
+			this.Controls.Add(this.gbFilter);
 			this.Controls.Add(this.btnAddEmployee);
 			this.Controls.Add(this.btnDeleteEmployee);
 			this.Controls.Add(this.btnEditEmployee);
-			this.Controls.Add(this.btnSearch);
-			this.Controls.Add(this.txtSearch);
 			this.Controls.Add(this.lblCurrentPage);
 			this.Controls.Add(this.btnPrevious);
 			this.Controls.Add(this.btnNext);
 			this.Controls.Add(this.dgEmployees);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
 			this.Name = "EmployeeManagement";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Employee Management";
 			this.Load += new System.EventHandler(this.EmployeeManagement_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dgEmployees)).EndInit();
+			this.gbFilter.ResumeLayout(false);
+			this.gbFilter.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -173,11 +279,20 @@
     private System.Windows.Forms.Button btnNext;
     private System.Windows.Forms.Button btnPrevious;
     private System.Windows.Forms.Label lblCurrentPage;
-    private System.Windows.Forms.TextBox txtSearch;
+    private System.Windows.Forms.TextBox txtFilterName;
     private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnEditEmployee;
         private System.Windows.Forms.Button btnDeleteEmployee;
         private System.Windows.Forms.Button btnAddEmployee;
+        private System.Windows.Forms.GroupBox gbFilter;
+        private System.Windows.Forms.Label lblEmailFilter;
+        private System.Windows.Forms.TextBox txtFilterEmail;
+        private System.Windows.Forms.Label lblNameFilter;
+        private System.Windows.Forms.Label lblGender;
+        private System.Windows.Forms.Label lblFeedback;
+        private System.Windows.Forms.ComboBox ddlFilterGender;
+        private System.Windows.Forms.ComboBox ddlFilterStatus;
+        private System.Windows.Forms.Label lblFilterStatus;
     }
 }
 

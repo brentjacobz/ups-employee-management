@@ -1,4 +1,4 @@
-using UPS.EmployeeManagement.Services.Dtos;
+using UPS.EmployeeManagement.Services.Models;
 
 namespace UPS.EmployeeManagement.Services.Responses
 {

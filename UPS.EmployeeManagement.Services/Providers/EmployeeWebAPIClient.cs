@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Serilog;
 using Serilog.Core;
-using UPS.EmployeeManagement.Services.Dtos;
 using UPS.EmployeeManagement.Services.Interfaces;
+using UPS.EmployeeManagement.Services.Models;
 using UPS.EmployeeManagement.Services.Responses;
 
 namespace UPS.EmployeeManagement.Services.Providers
@@ -30,12 +30,10 @@ namespace UPS.EmployeeManagement.Services.Providers
             _logger = logger;
         }
 
-        public async Task<EmployeeResponse> ListEmployees(int page, string nameSearch)
+        public async Task<EmployeeResponse> ListEmployees(EmployeeFilter filter)
         {
             var url = $"{_baseUrl}{_users}";
-            // update with page number if provided
-            url = $"{url}?page={page}";
-            if (!string.IsNullOrEmpty(nameSearch)) url = $"{url}&name={nameSearch}";
+            url = $"{url}{filter.GetQueryStringFilter()}";
 
             // Default Employee Response
             var employeeResponse = new EmployeeResponse
@@ -50,11 +48,15 @@ namespace UPS.EmployeeManagement.Services.Providers
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     var goRestResponse = JsonConvert.DeserializeObject<GoRestResponse>(content);
+                    employeeResponse.PageInformation = goRestResponse.Meta.Pagination;
                     employeeResponse.Employees.AddRange(goRestResponse.Data);
                 }
-
-                employeeResponse.Success = false;
-                employeeResponse.ResponseMessage = response.ReasonPhrase;
+                else
+                {
+                    employeeResponse.Success = false;
+                    employeeResponse.ResponseMessage = response.ReasonPhrase;
+                    _logger.Error(response.ReasonPhrase);
+                }
             }
 
             return employeeResponse;
@@ -77,6 +79,7 @@ namespace UPS.EmployeeManagement.Services.Providers
 
                 employeeResponse.Success = false;
                 employeeResponse.ResponseMessage = response.ReasonPhrase;
+                _logger.Error(response.ReasonPhrase);
             }
 
             return employeeResponse;
@@ -102,6 +105,7 @@ namespace UPS.EmployeeManagement.Services.Providers
 
                 employeeResponse.Success = false;
                 employeeResponse.ResponseMessage = response.ReasonPhrase;
+                _logger.Error(response.ReasonPhrase);
             }
 
             return employeeResponse;
@@ -114,13 +118,15 @@ namespace UPS.EmployeeManagement.Services.Providers
 
             var url = $"{_baseUrl}{_users}";
             url = $"{url}/{employeeId}";
-            using (HttpResponseMessage response = await _httpClient.DeleteAsync(url))
+            using (var response = await _httpClient.DeleteAsync(url))
             {
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    employeeResponse.Success = false;
-                    employeeResponse.ResponseMessage = response.ReasonPhrase;
+                    return employeeResponse;
                 }
+                    
+                employeeResponse.Success = false;
+                employeeResponse.ResponseMessage = response.ReasonPhrase;
 
                 return employeeResponse;
             }

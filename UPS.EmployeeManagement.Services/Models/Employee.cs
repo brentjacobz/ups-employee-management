@@ -1,6 +1,6 @@
 using System;
 
-namespace UPS.EmployeeManagement.Services.Dtos
+namespace UPS.EmployeeManagement.Services.Models
 {
     public class Employee
     {
@@ -11,5 +11,5 @@ namespace UPS.EmployeeManagement.Services.Dtos
         public string status { get; set; }
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
-  }
+    }
 }
