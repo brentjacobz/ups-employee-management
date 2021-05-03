@@ -2,7 +2,7 @@ using UPS.EmployeeManagement.Services.Models;
 
 namespace UPS.EmployeeManagement.Services.Responses
 {
-    public class GoRestResponse
+    public class ListEmployeeResponse
     {
         public int Code { get; set; }
         public MetaData Meta { get; set; }

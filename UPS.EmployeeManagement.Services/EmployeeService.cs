@@ -10,14 +10,13 @@ namespace UPS.EmployeeManagement.Services
 {
     public class EmployeeService : ServiceBase, IEmployeeService
     {
-        private readonly ILogger _logger;
         private readonly IEmployeeRepository _employeeRepository;
 
         #region Constructors
 
-        public EmployeeService(ILogger logger, IEmployeeRepository employeeRepository) : base(logger)
+        public EmployeeService(ILogger logger, IEmployeeRepository employeeRepository)
+            : base(logger)
         {
-            _logger = logger;
             _employeeRepository = employeeRepository;
         }
 

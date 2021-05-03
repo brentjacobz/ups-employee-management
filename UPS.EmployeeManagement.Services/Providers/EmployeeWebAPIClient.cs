@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -16,7 +17,7 @@ namespace UPS.EmployeeManagement.Services.Providers
     public class EmployeeWebAPIClient : IEmployeeRepository
     {
         private readonly HttpClient _httpClient;
-        
+
         private readonly ILogger _logger;
         private const string _baseUrl = "https://gorest.co.in/public-api/";
         private const string _users = "users";
@@ -36,27 +37,11 @@ namespace UPS.EmployeeManagement.Services.Providers
             url = $"{url}{filter.GetQueryStringFilter()}";
 
             // Default Employee Response
-            var employeeResponse = new EmployeeResponse
-            {
-                Success = true,
-                Employees = new List<Employee>()
-            };
+            EmployeeResponse employeeResponse;
 
             using (var response = await _httpClient.GetAsync(url))
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var goRestResponse = JsonConvert.DeserializeObject<GoRestResponse>(content);
-                    employeeResponse.PageInformation = goRestResponse.Meta.Pagination;
-                    employeeResponse.Employees.AddRange(goRestResponse.Data);
-                }
-                else
-                {
-                    employeeResponse.Success = false;
-                    employeeResponse.ResponseMessage = response.ReasonPhrase;
-                    _logger.Error(response.ReasonPhrase);
-                }
+                employeeResponse = await CreateEmployeeResponse(response, true);
             }
 
             return employeeResponse;
@@ -67,19 +52,13 @@ namespace UPS.EmployeeManagement.Services.Providers
             if (employee == null)
                 return null;
             // Default Employee Response
-            var employeeResponse = new EmployeeResponse { Success = true };
+            EmployeeResponse employeeResponse;
 
             var url = $"{_baseUrl}{_users}";
             var content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             using (var response = await _httpClient.PostAsync(url, content))
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
-                    return employeeResponse;
-
-                employeeResponse.Success = false;
-                employeeResponse.ResponseMessage = response.ReasonPhrase;
-                _logger.Error(response.ReasonPhrase);
+                employeeResponse = await CreateEmployeeResponse(response);
             }
 
             return employeeResponse;
@@ -90,22 +69,14 @@ namespace UPS.EmployeeManagement.Services.Providers
             if (employee == null)
                 return null;
             // Default Employee Response
-            var employeeResponse = new EmployeeResponse {Success = true};
+            EmployeeResponse employeeResponse;
 
             var url = $"{_baseUrl}{_users}";
             url = $"{url}/{employee.id}";
             var content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             using (var response = await _httpClient.PutAsync(url, content))
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    return employeeResponse;
-                }
-
-                employeeResponse.Success = false;
-                employeeResponse.ResponseMessage = response.ReasonPhrase;
-                _logger.Error(response.ReasonPhrase);
+                employeeResponse = await CreateEmployeeResponse(response);
             }
 
             return employeeResponse;
@@ -113,23 +84,69 @@ namespace UPS.EmployeeManagement.Services.Providers
 
         public async Task<EmployeeResponse> DeleteEmployee(long employeeId)
         {
-            // Default Employee Response
-            var employeeResponse = new EmployeeResponse { Success = true };
-
             var url = $"{_baseUrl}{_users}";
             url = $"{url}/{employeeId}";
             using (var response = await _httpClient.DeleteAsync(url))
             {
-                if (response.IsSuccessStatusCode)
-                {
-                    return employeeResponse;
-                }
-                    
-                employeeResponse.Success = false;
-                employeeResponse.ResponseMessage = response.ReasonPhrase;
+                return await CreateEmployeeResponse(response);
+            }
+        }
 
+        public async Task<EmployeeResponse> CreateEmployeeResponse(HttpResponseMessage httpResponseMessage, bool shouldRetrieveList = false)
+        {
+            var operation = shouldRetrieveList ? "list" : "CRUD";
+            // Default Employee Response
+            var employeeResponse = new EmployeeResponse
+            {
+                Success = true,
+                ResponseMessage = shouldRetrieveList ? "List/Search operation successful" : "CRUD operation successful"
+            };
+            int[] successCodes = { 200, 201, 204 };
+            // Check to see that we have a response from the server
+            if (httpResponseMessage == null)
+            {
                 return employeeResponse;
             }
+
+            try
+            {
+                // Check if an error occured on the server
+                if (!httpResponseMessage.IsSuccessStatusCode)
+                {
+                    employeeResponse.Success = false;
+                    employeeResponse.ResponseMessage = httpResponseMessage.ReasonPhrase;
+                }
+                else
+                {
+                    var responseContent = await httpResponseMessage.Content.ReadAsStringAsync();
+                    if (shouldRetrieveList)
+                    {
+                        var listEmployeeResponse = JsonConvert.DeserializeObject<ListEmployeeResponse>(responseContent);
+                        employeeResponse.Employees = new List<Employee>(listEmployeeResponse.Data);
+                        employeeResponse.PageInformation = listEmployeeResponse.Meta.Pagination;
+                    }
+                    else
+                    {
+                        var crudEmployeeResponse = JsonConvert.DeserializeObject<CRUDEmployeeResponse>(responseContent);
+                        // Check if there's a logic error (deleting or updating an employee that doesn't exist)
+                        if (!successCodes.Contains(crudEmployeeResponse.code))
+                        {
+                            employeeResponse.Success = false;
+                            employeeResponse.ResponseMessage = crudEmployeeResponse.data.message;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                employeeResponse.Success = false;
+
+                employeeResponse.ResponseMessage = $"An error occured during {operation}. See log for details.";
+            }
+
+            return employeeResponse;
         }
     }
 }

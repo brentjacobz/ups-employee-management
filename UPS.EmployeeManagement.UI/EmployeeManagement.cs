@@ -1,14 +1,10 @@
 using Serilog;
 using System;
 using System.Configuration;
-using System.Linq;
 using System.Windows.Forms;
-using Serilog.Core;
 using UPS.EmployeeManagement.Services;
-using UPS.EmployeeManagement.Services.Enums;
 using UPS.EmployeeManagement.Services.Interfaces;
 using UPS.EmployeeManagement.Services.Models;
-using UPS.EmployeeManagement.Services.Providers;
 
 namespace UPS.EmployeeManagement.UI
 {
@@ -40,7 +36,7 @@ namespace UPS.EmployeeManagement.UI
         {
             // Load the first page of employees on startup
             PopulateEmployeeGrid();
-	    // Set all the Filter Controls
+            // Set all the Filter Controls
             ResetFilter();
         }
 
@@ -120,7 +116,8 @@ namespace UPS.EmployeeManagement.UI
             if (confirmResult != DialogResult.Yes)
                 return;
 
-            await _employeeService.DeleteEmployee(_currentSelectedEmployee.id);
+            var crudEmployeeResponse = await _employeeService.DeleteEmployee(_currentSelectedEmployee.id);
+            lblFeedback.Text = crudEmployeeResponse.ResponseMessage;
             PopulateEmployeeGrid();
         }
 
@@ -136,7 +133,9 @@ namespace UPS.EmployeeManagement.UI
             if (result != DialogResult.OK)
                 return;
             // Add the Employee
-            await _employeeService.AddEmployee(upsertEmployee.Employee);
+            var crudEmployeeResponse = await _employeeService.AddEmployee(upsertEmployee.Employee);
+            lblFeedback.Text = crudEmployeeResponse.ResponseMessage;
+
             PopulateEmployeeGrid();
         }
 
@@ -147,7 +146,10 @@ namespace UPS.EmployeeManagement.UI
             if (result != DialogResult.OK)
                 return;
             // Update the Employee
-            await _employeeService.UpdateEmployee(upsertEmployee.Employee);
+            // Add the Employee
+            var crudEmployeeResponse = await _employeeService.UpdateEmployee(upsertEmployee.Employee);
+            lblFeedback.Text = crudEmployeeResponse.ResponseMessage;
+            
             PopulateEmployeeGrid();
         }
     }
