@@ -5,18 +5,19 @@ using Serilog;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using UPS.EmployeeManagement.Services.Providers;
 using UPS.EmployeeManagement.Services.Responses;
 
 namespace UPS.EmployeeManagement.Tests
 {
     [TestClass]
-    public class EmployeeWebAPIClientTests
+    public class EmployeeWebApiClientTests
     {
         private readonly EmployeeWebAPIClient employeeWebAPIClient;
         private readonly Mock<ILogger> logger = new Mock<ILogger>();
 
-        public EmployeeWebAPIClientTests()
+        public EmployeeWebApiClientTests()
         {
             employeeWebAPIClient = new EmployeeWebAPIClient(logger.Object, "TESTTOKEN");
         }
@@ -24,11 +25,10 @@ namespace UPS.EmployeeManagement.Tests
         [TestInitialize]
         public void Initialise()
         {
-
         }
 
         [TestMethod]
-        public async void Should_create_employee_response_for_adding_new_employee()
+        public async Task Should_create_employee_response_for_adding_new_employee()
         {
             var crudEmployeeResponse = new CRUDEmployeeResponse
             {
@@ -53,7 +53,7 @@ namespace UPS.EmployeeManagement.Tests
         }
 
         [TestMethod]
-        public async void Should_return_error_when_updating_an_employee_that_doesnt_exist()
+        public async Task Should_return_error_when_updating_an_employee_that_doesnt_exist()
         {
             var crudEmployeeResponse = new CRUDEmployeeResponse
             {
