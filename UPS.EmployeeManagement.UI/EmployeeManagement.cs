@@ -1,7 +1,10 @@
 using Serilog;
 using System;
 using System.Configuration;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using ServiceStack;
 using UPS.EmployeeManagement.Services;
 using UPS.EmployeeManagement.Services.Interfaces;
 using UPS.EmployeeManagement.Services.Models;
@@ -151,6 +154,21 @@ namespace UPS.EmployeeManagement.UI
             lblFeedback.Text = crudEmployeeResponse.ResponseMessage;
             
             PopulateEmployeeGrid();
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            var saveDialog = new SaveFileDialog
+            {
+                FileName = "EmployeesExport",
+                Filter = "Comma Delimited File|*.csv"
+            };
+
+            var employeesToExport = (from DataGridViewRow dataGridViewRow in dgEmployees.Rows select dataGridViewRow.DataBoundItem as Employee).ToList();
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(saveDialog.FileName, employeesToExport.ToCsv());
+            }
         }
     }
 }

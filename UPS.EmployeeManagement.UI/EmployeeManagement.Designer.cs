@@ -38,14 +38,15 @@
 			this.btnDeleteEmployee = new System.Windows.Forms.Button();
 			this.btnAddEmployee = new System.Windows.Forms.Button();
 			this.gbFilter = new System.Windows.Forms.GroupBox();
+			this.ddlFilterStatus = new System.Windows.Forms.ComboBox();
+			this.lblFilterStatus = new System.Windows.Forms.Label();
+			this.ddlFilterGender = new System.Windows.Forms.ComboBox();
 			this.lblGender = new System.Windows.Forms.Label();
 			this.lblEmailFilter = new System.Windows.Forms.Label();
 			this.txtFilterEmail = new System.Windows.Forms.TextBox();
 			this.lblNameFilter = new System.Windows.Forms.Label();
 			this.lblFeedback = new System.Windows.Forms.Label();
-			this.ddlFilterGender = new System.Windows.Forms.ComboBox();
-			this.ddlFilterStatus = new System.Windows.Forms.ComboBox();
-			this.lblFilterStatus = new System.Windows.Forms.Label();
+			this.btnExport = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dgEmployees)).BeginInit();
 			this.gbFilter.SuspendLayout();
 			this.SuspendLayout();
@@ -169,6 +170,39 @@
 			this.gbFilter.TabStop = false;
 			this.gbFilter.Text = "Filter";
 			// 
+			// ddlFilterStatus
+			// 
+			this.ddlFilterStatus.FormattingEnabled = true;
+			this.ddlFilterStatus.Items.AddRange(new object[] {
+            "Select...",
+            "Active",
+            "Inactive"});
+			this.ddlFilterStatus.Location = new System.Drawing.Point(676, 18);
+			this.ddlFilterStatus.Name = "ddlFilterStatus";
+			this.ddlFilterStatus.Size = new System.Drawing.Size(80, 21);
+			this.ddlFilterStatus.TabIndex = 17;
+			// 
+			// lblFilterStatus
+			// 
+			this.lblFilterStatus.AutoSize = true;
+			this.lblFilterStatus.Location = new System.Drawing.Point(624, 23);
+			this.lblFilterStatus.Name = "lblFilterStatus";
+			this.lblFilterStatus.Size = new System.Drawing.Size(40, 13);
+			this.lblFilterStatus.TabIndex = 16;
+			this.lblFilterStatus.Text = "Status:";
+			// 
+			// ddlFilterGender
+			// 
+			this.ddlFilterGender.FormattingEnabled = true;
+			this.ddlFilterGender.Items.AddRange(new object[] {
+            "Select...",
+            "Male",
+            "Female"});
+			this.ddlFilterGender.Location = new System.Drawing.Point(538, 18);
+			this.ddlFilterGender.Name = "ddlFilterGender";
+			this.ddlFilterGender.Size = new System.Drawing.Size(80, 21);
+			this.ddlFilterGender.TabIndex = 15;
+			// 
 			// lblGender
 			// 
 			this.lblGender.AutoSize = true;
@@ -213,44 +247,23 @@
 			this.lblFeedback.TabIndex = 11;
 			this.lblFeedback.Text = "...";
 			// 
-			// ddlFilterGender
+			// btnExport
 			// 
-			this.ddlFilterGender.FormattingEnabled = true;
-			this.ddlFilterGender.Items.AddRange(new object[] {
-            "Select...",
-            "Male",
-            "Female"});
-			this.ddlFilterGender.Location = new System.Drawing.Point(538, 18);
-			this.ddlFilterGender.Name = "ddlFilterGender";
-			this.ddlFilterGender.Size = new System.Drawing.Size(80, 21);
-			this.ddlFilterGender.TabIndex = 15;
-			// 
-			// ddlFilterStatus
-			// 
-			this.ddlFilterStatus.FormattingEnabled = true;
-			this.ddlFilterStatus.Items.AddRange(new object[] {
-            "Select...",
-            "Active",
-            "Inactive"});
-			this.ddlFilterStatus.Location = new System.Drawing.Point(676, 18);
-			this.ddlFilterStatus.Name = "ddlFilterStatus";
-			this.ddlFilterStatus.Size = new System.Drawing.Size(80, 21);
-			this.ddlFilterStatus.TabIndex = 17;
-			// 
-			// lblFilterStatus
-			// 
-			this.lblFilterStatus.AutoSize = true;
-			this.lblFilterStatus.Location = new System.Drawing.Point(624, 23);
-			this.lblFilterStatus.Name = "lblFilterStatus";
-			this.lblFilterStatus.Size = new System.Drawing.Size(40, 13);
-			this.lblFilterStatus.TabIndex = 16;
-			this.lblFilterStatus.Text = "Status:";
+			this.btnExport.ForeColor = System.Drawing.Color.Black;
+			this.btnExport.Location = new System.Drawing.Point(300, 12);
+			this.btnExport.Name = "btnExport";
+			this.btnExport.Size = new System.Drawing.Size(91, 23);
+			this.btnExport.TabIndex = 12;
+			this.btnExport.Text = "Export Page";
+			this.btnExport.UseVisualStyleBackColor = true;
+			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
 			// 
 			// EmployeeManagement
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(878, 599);
+			this.Controls.Add(this.btnExport);
 			this.Controls.Add(this.lblFeedback);
 			this.Controls.Add(this.gbFilter);
 			this.Controls.Add(this.btnAddEmployee);
@@ -293,6 +306,7 @@
         private System.Windows.Forms.ComboBox ddlFilterGender;
         private System.Windows.Forms.ComboBox ddlFilterStatus;
         private System.Windows.Forms.Label lblFilterStatus;
+        private System.Windows.Forms.Button btnExport;
     }
 }
 
