@@ -47,6 +47,7 @@
 			this.lblNameFilter = new System.Windows.Forms.Label();
 			this.lblFeedback = new System.Windows.Forms.Label();
 			this.btnExport = new System.Windows.Forms.Button();
+			this.btnClearFilter = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dgEmployees)).BeginInit();
 			this.gbFilter.SuspendLayout();
 			this.SuspendLayout();
@@ -62,7 +63,7 @@
 			this.dgEmployees.Name = "dgEmployees";
 			this.dgEmployees.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
 			this.dgEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgEmployees.Size = new System.Drawing.Size(853, 466);
+			this.dgEmployees.Size = new System.Drawing.Size(940, 466);
 			this.dgEmployees.TabIndex = 0;
 			this.dgEmployees.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgEmployees_DataBindingComplete);
 			this.dgEmployees.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEmployees_RowEnter);
@@ -71,7 +72,7 @@
 			// 
 			this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNext.Enabled = false;
-			this.btnNext.Location = new System.Drawing.Point(806, 567);
+			this.btnNext.Location = new System.Drawing.Point(893, 567);
 			this.btnNext.Name = "btnNext";
 			this.btnNext.Size = new System.Drawing.Size(60, 23);
 			this.btnNext.TabIndex = 2;
@@ -83,7 +84,7 @@
 			// 
 			this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPrevious.Enabled = false;
-			this.btnPrevious.Location = new System.Drawing.Point(656, 567);
+			this.btnPrevious.Location = new System.Drawing.Point(743, 567);
 			this.btnPrevious.Name = "btnPrevious";
 			this.btnPrevious.Size = new System.Drawing.Size(62, 23);
 			this.btnPrevious.TabIndex = 3;
@@ -95,7 +96,7 @@
 			// 
 			this.lblCurrentPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblCurrentPage.AutoSize = true;
-			this.lblCurrentPage.Location = new System.Drawing.Point(723, 572);
+			this.lblCurrentPage.Location = new System.Drawing.Point(810, 572);
 			this.lblCurrentPage.Name = "lblCurrentPage";
 			this.lblCurrentPage.Size = new System.Drawing.Size(77, 13);
 			this.lblCurrentPage.TabIndex = 4;
@@ -104,7 +105,7 @@
 			// txtFilterName
 			// 
 			this.txtFilterName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtFilterName.Location = new System.Drawing.Point(52, 19);
+			this.txtFilterName.Location = new System.Drawing.Point(52, 20);
 			this.txtFilterName.Name = "txtFilterName";
 			this.txtFilterName.Size = new System.Drawing.Size(192, 20);
 			this.txtFilterName.TabIndex = 5;
@@ -154,6 +155,7 @@
 			// 
 			// gbFilter
 			// 
+			this.gbFilter.Controls.Add(this.btnClearFilter);
 			this.gbFilter.Controls.Add(this.ddlFilterStatus);
 			this.gbFilter.Controls.Add(this.lblFilterStatus);
 			this.gbFilter.Controls.Add(this.ddlFilterGender);
@@ -165,7 +167,7 @@
 			this.gbFilter.Controls.Add(this.btnSearch);
 			this.gbFilter.Location = new System.Drawing.Point(12, 41);
 			this.gbFilter.Name = "gbFilter";
-			this.gbFilter.Size = new System.Drawing.Size(851, 48);
+			this.gbFilter.Size = new System.Drawing.Size(941, 48);
 			this.gbFilter.TabIndex = 10;
 			this.gbFilter.TabStop = false;
 			this.gbFilter.Text = "Filter";
@@ -258,11 +260,21 @@
 			this.btnExport.UseVisualStyleBackColor = true;
 			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
 			// 
+			// btnClearFilter
+			// 
+			this.btnClearFilter.Location = new System.Drawing.Point(851, 17);
+			this.btnClearFilter.Name = "btnClearFilter";
+			this.btnClearFilter.Size = new System.Drawing.Size(74, 23);
+			this.btnClearFilter.TabIndex = 18;
+			this.btnClearFilter.Text = "Clear Filter";
+			this.btnClearFilter.UseVisualStyleBackColor = true;
+			this.btnClearFilter.Click += new System.EventHandler(this.btnClearFilter_Click);
+			// 
 			// EmployeeManagement
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(878, 599);
+			this.ClientSize = new System.Drawing.Size(965, 599);
 			this.Controls.Add(this.btnExport);
 			this.Controls.Add(this.lblFeedback);
 			this.Controls.Add(this.gbFilter);
@@ -274,6 +286,7 @@
 			this.Controls.Add(this.btnNext);
 			this.Controls.Add(this.dgEmployees);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
 			this.Name = "EmployeeManagement";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Employee Management";
@@ -307,6 +320,7 @@
         private System.Windows.Forms.ComboBox ddlFilterStatus;
         private System.Windows.Forms.Label lblFilterStatus;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnClearFilter;
     }
 }
 

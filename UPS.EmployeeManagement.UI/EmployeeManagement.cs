@@ -72,6 +72,12 @@ namespace UPS.EmployeeManagement.UI
             txtFilterEmail.Text = "";
             ddlFilterGender.SelectedIndex = 0;
             ddlFilterStatus.SelectedIndex = 0;
+
+            _currentEmployeeFilter.PageNumber = 1;
+            _currentEmployeeFilter.name = "";
+            _currentEmployeeFilter.status = "";
+            _currentEmployeeFilter.gender = "";
+            _currentEmployeeFilter.email = "";
         }
 
         private void UpdateSelectedEmployee()
@@ -96,6 +102,7 @@ namespace UPS.EmployeeManagement.UI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            _currentEmployeeFilter.PageNumber = 1;
             _currentEmployeeFilter.name = txtFilterName.Text;
             _currentEmployeeFilter.email = txtFilterEmail.Text;
             _currentEmployeeFilter.gender = ddlFilterGender.SelectedIndex > 0 ? ddlFilterGender.SelectedItem.ToString() : "";
@@ -169,6 +176,13 @@ namespace UPS.EmployeeManagement.UI
             {
                 File.WriteAllText(saveDialog.FileName, employeesToExport.ToCsv());
             }
+        }
+
+        private void btnClearFilter_Click(object sender, EventArgs e)
+        {
+            ResetFilter();
+            
+            PopulateEmployeeGrid();
         }
     }
 }
