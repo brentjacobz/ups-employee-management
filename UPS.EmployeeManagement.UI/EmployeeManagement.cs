@@ -4,8 +4,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using ServiceStack;
 using UPS.EmployeeManagement.Services;
+using UPS.EmployeeManagement.Services.Export;
 using UPS.EmployeeManagement.Services.Interfaces;
 using UPS.EmployeeManagement.Services.Models;
 
@@ -174,7 +174,7 @@ namespace UPS.EmployeeManagement.UI
             var employeesToExport = (from DataGridViewRow dataGridViewRow in dgEmployees.Rows select dataGridViewRow.DataBoundItem as Employee).ToList();
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllText(saveDialog.FileName, employeesToExport.ToCsv());
+                File.WriteAllText(saveDialog.FileName, EmployeeExport.ExportEmployeeToCsv(employeesToExport));
             }
         }
 

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Export\EmployeeExport.cs" />
     <Compile Include="Models\EmployeeFilter.cs" />
     <Compile Include="Responses\CRUDEmployeeResponse.cs" />
     <Compile Include="Responses\ListEmployeeResponse.cs" />

@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmployeeExportTests.cs" />
     <Compile Include="EmployeeFilterTests.cs" />
     <Compile Include="EmployeeServiceTests.cs" />
     <Compile Include="EmployeeWebAPIClientTests.cs" />
