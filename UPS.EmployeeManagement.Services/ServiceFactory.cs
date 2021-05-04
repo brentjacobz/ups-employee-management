@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Specialized;
 using Serilog;
 using UPS.EmployeeManagement.Services.Interfaces;

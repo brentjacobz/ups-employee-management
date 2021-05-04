@@ -13,6 +13,10 @@ namespace UPS.EmployeeManagement.UI
         {
             InitializeComponent();
             Employee = employee;
+
+            // Set drop downs to defaults
+            ddlFilterGender.SelectedIndex = 0;
+            ddlFilterStatus.SelectedIndex = 0;
         }
 
         private void PopulateEmployeeDetails()
