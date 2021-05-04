@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Serilog;
@@ -26,26 +27,60 @@ namespace UPS.EmployeeManagement.Services
 
         public async Task<EmployeeResponse> GetEmployeesByPage(EmployeeFilter employeeFilter)
         {
-            var employeeResponse = await _employeeRepository.ListEmployees(employeeFilter);
-            return employeeResponse;
+            try
+            {
+                var employeeResponse = await _employeeRepository.ListEmployees(employeeFilter);
+                return employeeResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
+
         }
 
         public async Task<EmployeeResponse> AddEmployee(Employee employee)
         {
-            var employeeResponse = await _employeeRepository.AddEmployee(employee);
-            return employeeResponse;
+            try
+            {
+                var employeeResponse = await _employeeRepository.AddEmployee(employee);
+                return employeeResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
+
         }
 
         public async Task<EmployeeResponse> UpdateEmployee(Employee employee)
         {
-            var employeeResponse = await _employeeRepository.UpdateEmployee(employee);
-            return employeeResponse;
+            try
+            {
+                var employeeResponse = await _employeeRepository.UpdateEmployee(employee);
+                return employeeResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
         }
 
         public async Task<EmployeeResponse> DeleteEmployee(long employeeId)
         {
-            var employeeResponse = await _employeeRepository.DeleteEmployee(employeeId);
-            return employeeResponse;
+            try
+            {
+                var employeeResponse = await _employeeRepository.DeleteEmployee(employeeId);
+                return employeeResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
         }
 
         #endregion

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UPS.EmployeeManagement.Services.Models;
 using UPS.EmployeeManagement.Services.Responses;

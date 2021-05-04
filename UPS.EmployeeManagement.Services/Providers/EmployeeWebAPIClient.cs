@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 using UPS.EmployeeManagement.Services.Interfaces;
 using UPS.EmployeeManagement.Services.Models;
 using UPS.EmployeeManagement.Services.Responses;
@@ -28,14 +27,14 @@ namespace UPS.EmployeeManagement.Services.Providers
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiToken);
+            _httpClient.BaseAddress = new Uri(_baseUrl);
             _logger = logger;
         }
 
         public async Task<EmployeeResponse> ListEmployees(EmployeeFilter filter)
         {
-            var url = $"{_baseUrl}{_users}";
-            url = $"{url}{filter.GetQueryStringFilter()}";
-
+            var url = $"{_users}{filter.GetQueryStringFilter()}";
+            
             // Default Employee Response
             EmployeeResponse employeeResponse;
 
@@ -54,7 +53,7 @@ namespace UPS.EmployeeManagement.Services.Providers
             // Default Employee Response
             EmployeeResponse employeeResponse;
 
-            var url = $"{_baseUrl}{_users}";
+            var url = $"{_users}";
             var content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             using (var response = await _httpClient.PostAsync(url, content))
             {
@@ -71,8 +70,7 @@ namespace UPS.EmployeeManagement.Services.Providers
             // Default Employee Response
             EmployeeResponse employeeResponse;
 
-            var url = $"{_baseUrl}{_users}";
-            url = $"{url}/{employee.id}";
+            var url = $"{_users}/{employee.id}";
             var content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             using (var response = await _httpClient.PutAsync(url, content))
             {
@@ -84,8 +82,7 @@ namespace UPS.EmployeeManagement.Services.Providers
 
         public async Task<EmployeeResponse> DeleteEmployee(long employeeId)
         {
-            var url = $"{_baseUrl}{_users}";
-            url = $"{url}/{employeeId}";
+            var url = $"{_users}/{employeeId}";
             using (var response = await _httpClient.DeleteAsync(url))
             {
                 return await CreateEmployeeResponse(response);

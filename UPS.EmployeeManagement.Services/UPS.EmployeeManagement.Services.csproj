@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Models\EmployeeFilter.cs" />
     <Compile Include="Responses\CRUDEmployeeResponse.cs" />
-    <Compile Include="Responses\UpsertEmployeeResponse.cs" />
     <Compile Include="Responses\ListEmployeeResponse.cs" />
     <Compile Include="Models\PageInformation.cs" />
     <Compile Include="Interfaces\IEmployeeRepository.cs" />

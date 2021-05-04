@@ -4,10 +4,10 @@ namespace UPS.EmployeeManagement.Services.Providers
 {
     public abstract class ServiceBase
     {
-        protected readonly ILogger Logger;
+        protected readonly ILogger _logger;
         protected ServiceBase(ILogger logger)
         {
-            Logger = logger;
+            _logger = logger;
         }
     }
 }

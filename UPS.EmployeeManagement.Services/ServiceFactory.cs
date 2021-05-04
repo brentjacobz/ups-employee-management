@@ -16,7 +16,7 @@ namespace UPS.EmployeeManagement.Services
                 if (appSettings["WebAPIToken"] != null)
                 {
                     var repository = new EmployeeWebAPIClient(logger, appSettings["WebAPIToken"]);
-		    return new EmployeeService(logger, repository);
+                    return new EmployeeService(logger, repository);
                 }
                 logger.Error("WebAPI was configured as the DataProvider, but no WebAPIToken was provided.");
             }
